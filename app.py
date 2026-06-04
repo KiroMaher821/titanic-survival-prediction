@@ -23,24 +23,22 @@ embarked = st.selectbox("Port of Embarkation", ["Cherbourg (C)", "Queenstown (Q)
 # Models only understand numbers, so we must encode the text just like we did in the notebook
 sex_encoded = 1 if sex == "Female" else 0
 
-# Assuming you used One-Hot Encoding for the Embarked column
-embarked_C = 1 if embarked == "Cherbourg (C)" else 0
-embarked_Q = 1 if embarked == "Queenstown (Q)" else 0
-embarked_S = 1 if embarked == "Southampton (S)" else 0
+# Map the ports to the 0, 1, 2 format your model was trained on
+embarked_0 = 1 if embarked == "Cherbourg (C)" else 0
+embarked_1 = 1 if embarked == "Queenstown (Q)" else 0
+embarked_2 = 1 if embarked == "Southampton (S)" else 0
 
 # 5. Format the data perfectly for the model
-# CRITICAL: These column names MUST exactly match the columns your model was trained on!
 input_data = pd.DataFrame({
     'Pclass': [pclass],
     'Sex': [sex_encoded],
     'Age': [age],
     'Fare': [fare],
     'FamilySize': [family_size],
-    'Embarked_C': [embarked_C],
-    'Embarked_Q': [embarked_Q],
-    'Embarked_S': [embarked_S]
+    'Embarked_0': [embarked_0],
+    'Embarked_1': [embarked_1],
+    'Embarked_2': [embarked_2]
 })
-
 # 6. Add a button to trigger the prediction
 if st.button("Predict Survival"):
     # The model returns an array, we want the first item [0]
